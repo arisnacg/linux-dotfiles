@@ -1,0 +1,1 @@
+/home/arisna/.vimrc

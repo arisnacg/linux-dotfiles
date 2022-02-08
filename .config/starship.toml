@@ -1,0 +1,30 @@
+[username]
+disabled = false
+show_always = true
+
+[sudo]
+symbol = " "
+disabled = false
+style = "bold red"
+
+[cmd_duration]
+style = "green"
+format = "took [$duration]($style) "
+
+[directory]
+read_only = " "
+home_symbol = " ~ "
+
+[nodejs]
+symbol = " "
+
+[python]
+disabled = true
+symbol = " "
+python_binary = "python3"
+style = "blue"
+
+[aws]
+disabled = true
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+symbol = " "
