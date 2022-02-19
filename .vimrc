@@ -58,16 +58,19 @@ syntax on
 
 " Plugins
 call plug#begin()
-  Plug 'joshdick/onedark.vim'
+  Plug 'folke/tokyonight.nvim'
   Plug 'chun-yang/auto-pairs'
   Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-surround'
+  Plug 'vim-scripts/AutoComplPop'
   Plug 'nvim-lualine/lualine.nvim'
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " Colorscheme
-colorscheme onedark
+let g:tokyonight_style = "night"
+colorscheme tokyonight
 
 " Transparent background
 hi Normal guibg=NONE ctermbg=NONE
@@ -84,7 +87,6 @@ lua << END
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'onedark',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
   },
@@ -93,8 +95,10 @@ require('lualine').setup {
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
-    disable = { "c", "rust" },
   },
 }
 
 END
+
+" Disable comment next line
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o

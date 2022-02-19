@@ -1,3 +1,5 @@
+add_newline = true
+
 [username]
 disabled = false
 show_always = true
@@ -12,19 +14,24 @@ style = "green"
 format = "took [$duration]($style) "
 
 [directory]
+truncation_length=1
 read_only = " "
-home_symbol = " ~ "
+home_symbol = " ~ "
+
+[package]
+symbol = " "
 
 [nodejs]
 symbol = " "
 
 [python]
-disabled = true
 symbol = " "
 python_binary = "python3"
 style = "blue"
 
 [aws]
-disabled = true
 format = 'on [$symbol($profile )(\($region\) )]($style)'
 symbol = " "
+
+[git_branch]
+symbol = " "
