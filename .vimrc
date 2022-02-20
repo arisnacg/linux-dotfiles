@@ -2,6 +2,7 @@
 set exrc
 
 " Relative line number
+set rnu
 set nu
 
 " No hightlight search
@@ -34,6 +35,12 @@ set shiftwidth=2
 set expandtab
 set smartindent
 
+" Term GUI colors
+set termguicolors
+
+" Sign column
+set signcolumn=yes
+
 " Leader key
 let mapleader = " "
 
@@ -58,7 +65,7 @@ syntax on
 
 " Plugins
 call plug#begin()
-  Plug 'folke/tokyonight.nvim'
+  Plug 'joshdick/onedark.vim'
   Plug 'chun-yang/auto-pairs'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-surround'
@@ -66,11 +73,12 @@ call plug#begin()
   Plug 'nvim-lualine/lualine.nvim'
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'lewis6991/gitsigns.nvim'
 call plug#end()
 
 " Colorscheme
-let g:tokyonight_style = "night"
-colorscheme tokyonight
+colorscheme onedark
 
 " Transparent background
 hi Normal guibg=NONE ctermbg=NONE
@@ -87,8 +95,6 @@ lua << END
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
   },
 }
 
@@ -96,7 +102,12 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
   },
+  indent = {
+    enable = true,
+  }
 }
+
+require('gitsigns').setup()
 
 END
 
