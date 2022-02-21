@@ -27,7 +27,7 @@ set undofile
 set incsearch
 
 " Scroll off
-set scrolloff=12
+set scrolloff=8
 
 " Tab
 set tabstop=2 softtabstop=2
@@ -75,6 +75,11 @@ call plug#begin()
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-lua/plenary.nvim'
   Plug 'lewis6991/gitsigns.nvim'
+  Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-fzy-native.nvim'
+  Plug 'romgrk/barbar.nvim'
 call plug#end()
 
 " Colorscheme
@@ -96,20 +101,64 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
   },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {},
+    lualine_x = {'encoding', 'fileformat'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
 }
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
   },
-  indent = {
-    enable = true,
-  }
 }
 
 require('gitsigns').setup()
 
+require("indent_blankline").setup {
+  char = "▏",
+  indentLine_enabled = 1,
+  show_trailing_blankline_indent = false,
+  show_first_indent_level = false,
+}
+
+require("telescope").setup({
+	defaults = {
+		file_sorter = require("telescope.sorters").get_fzy_sorter,
+		prompt_prefix = " >",
+		color_devicons = true,
+    file_ignore_patterns = {"node_modules"},
+		file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+		grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+	},
+	extensions = {
+		fzy_native = {
+			override_generic_sorter = false,
+			override_file_sorter = true,
+		},
+	},
+})
+
+require("telescope").load_extension("fzy_native")
+
 END
+
+" Telescope
+nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Barbar
+nnoremap <leader>, :BufferPrevious<CR>
+nnoremap <leader>. :BufferNext<CR>
+nnoremap <leader>x :BufferClose<CR>
+nnoremap <leader>X :BufferClose!<CR>
 
 " Disable comment next line
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
